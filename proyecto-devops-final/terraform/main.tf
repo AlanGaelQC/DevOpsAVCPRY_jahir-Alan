@@ -12,3 +12,8 @@ terraform {
 
   required_version = ">= 1.3.0"
 }
+
+resource "aws_s3_bucket" "my_bucket" {
+  bucket = "alan-devops-project-terraform-bucket-001"  # Nombre único
+  force_destroy = true  # Esta propiedad ayuda a eliminar el bucket incluso si tiene objetos
+}
