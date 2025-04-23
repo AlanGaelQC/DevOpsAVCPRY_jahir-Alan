@@ -1,0 +1,7 @@
+region         = "us-east-1"
+ami_id         = "ami-0c2b8ca1dad447f8a"
+instance_type  = "t2.micro"
+key_name       = "alan-devops-key"
+db_username    = "admin"
+db_password    = "ClaveSegura123!"
+db_name        = "devopsdb"
