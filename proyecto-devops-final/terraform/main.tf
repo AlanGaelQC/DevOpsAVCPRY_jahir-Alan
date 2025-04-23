@@ -15,12 +15,15 @@ terraform {
 # Bucket S3
 resource "aws_s3_bucket" "project_bucket" {
   bucket = "alan-devops-project-terraform-bucket-001"
-  acl    = "private"
-
   tags = {
     Name        = "Proyecto DevOps Alan"
     Environment = "Dev"
   }
+}
+
+resource "aws_s3_bucket_acl" "project_bucket_acl" {
+  bucket = aws_s3_bucket.project_bucket.bucket
+  acl    = "private"
 }
 
 # Security Group para permitir tráfico web y SSH
@@ -62,8 +65,8 @@ data "aws_vpc" "default" {
   default = true
 }
 
-# Obtener la Subnet predeterminada
-data "aws_subnet_ids" "default" {
+# Obtener la Subnet predeterminada (corrección)
+data "aws_subnet" "default" {
   vpc_id = data.aws_vpc.default.id
 }
 
@@ -73,7 +76,7 @@ resource "aws_instance" "web" {
   instance_type               = "t2.micro"
   key_name                    = var.key_name
   vpc_security_group_ids      = [aws_security_group.web_sg.id]
-  subnet_id                   = data.aws_subnet_ids.default.ids[0]
+  subnet_id                   = data.aws_subnet.default.id
   associate_public_ip_address = true
 
   tags = {
