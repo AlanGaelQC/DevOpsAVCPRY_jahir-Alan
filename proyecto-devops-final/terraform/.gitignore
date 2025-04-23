@@ -1,0 +1,7 @@
+# Ignorar archivos generados por Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.backup
+.terraform.lock.hcl
