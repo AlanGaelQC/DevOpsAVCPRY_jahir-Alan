@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Born to Race</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <div class="logo">Born to Race</div>
+        <ul class="nav-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#races">Races</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#" id="openModalBtn">Register</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero" class="hero" style="background-image: url('imagenes/0igecwdvgcf81.jpg'); background-size: cover; background-position: center;">
+        <div class="hero-content">
+            <h1>Born to Race</h1>
+            <p>Speed isn’t everything. It’s the only thing.</p>
+            <button id="music-btn">🎵 Play Music</button>
+        </div>
+    </section>
+
+    <!-- RACES SECTION -->
+    <section id="races" class="races">
+        <div class="race">
+            <img src="imagenes/fastandfurios.jpg" alt="Fast and Furious">
+            <h2>Fast & Furious</h2>
+            <p>Street racing legends collide in the urban jungle.</p>
+        </div>
+        <div class="race">
+            <img src="imagenes/OIP (1).jpeg" alt="Tokyo Drift Challenge">
+            <h2>Tokyo Drift Challenge</h2>
+            <p>Drift through neon-lit streets with ultimate precision.</p>
+        </div>
+        <div class="race">
+            <img src="imagenes/ProStreet.png" alt="ProStreet Legacy">
+            <h2>ProStreet Legacy</h2>
+            <p>From track to fame, dominate the circuit.</p>
+        </div>
+        <div class="race">
+            <img src="imagenes/wp4306463.webp" alt="Drag Rivals">
+            <h2>Drag Rivals</h2>
+            <p>Pure acceleration — prove who's king of the quarter mile.</p>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2025 Born to Race. All rights reserved.</p>
+    </footer>
+
+    <!-- REGISTER MODAL -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <span class="closeBtn">&times;</span>
+            <h2>Register</h2>
+            <form>
+                <input type="text" placeholder="Username" required>
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MUSIC AUDIO -->
+    <audio id="bg-music" src="audio/ProMusic.mp3" loop></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
