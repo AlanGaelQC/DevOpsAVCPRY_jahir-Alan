@@ -1,39 +1,15 @@
-# Configuración del proveedor
+# Definición del proveedor AWS
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
 
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
-# Bucket S3
-resource "aws_s3_bucket" "project_bucket" {
-  bucket = "alan-devops-project-terraform-bucket-001"
-  tags = {
-    Name        = "Proyecto DevOps Alan"
-    Environment = "Dev"
-  }
-}
-
-resource "aws_s3_bucket_acl" "project_bucket_acl" {
-  bucket = aws_s3_bucket.project_bucket.bucket
-  acl    = "private"
-}
-
-# Security Group para permitir tráfico web y SSH
-resource "aws_security_group" "web_sg" {
-  name        = "web-sg"
-  description = "Permitir tráfico HTTP y SSH"
-  vpc_id      = data.aws_vpc.default.id
-
+# Recurso: Grupo de seguridad
+resource "aws_security_group" "mi_grupo_seguridad" {
+  name        = "mi-grupo-seguridad"
+  description = "Grupo de seguridad para tráfico HTTP y SSH"
+  vpc_id      = "vpc-04dfe2b2dbae5d794"  # VPC ya creada
+  
   ingress {
-    description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -41,7 +17,6 @@ resource "aws_security_group" "web_sg" {
   }
 
   ingress {
-    description = "HTTP"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -51,44 +26,62 @@ resource "aws_security_group" "web_sg" {
   egress {
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"
+    protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
 
+# Recurso: Par de claves SSH
+resource "aws_key_pair" "devops_key" {
+  key_name   = "mi-clave-ssh-nueva"  # El nombre del par de claves
+  public_key = file("C:\\Users\\VladG\\Desktop\\SSHKey\\mi-clave-ssh-nueva.pub")  # Ruta de la clave pública
+}
+
+# Recurso: Instancia EC2
+resource "aws_instance" "devops_web_instance" {
+  ami           = "ami-0b86aaed8ef90e45f"  # ID de la AMI de Amazon Linux 2
+  instance_type = "t2.micro"  # Tipo de instancia
+  key_name      = aws_key_pair.devops_key.key_name  # Vincula el par de claves SSH
+  security_groups = [aws_security_group.mi_grupo_seguridad.name]  # Asocia el grupo de seguridad correctamente
+  
+  # Subred e IP pública
+  subnet_id      = "subnet-xxxxxxxx"  # Reemplaza con tu ID de Subred
+  associate_public_ip_address = true  # Asigna IP pública
+  
+  # Etiquetas
   tags = {
-    Name = "web-sg"
+    Name = "devops-web-instance"  # Nombre para la instancia
   }
 }
 
-# Obtener la VPC predeterminada
-data "aws_vpc" "default" {
-  default = true
+# Recurso: Elastic IP (IP pública estática)
+resource "aws_eip" "devops_web_eip" {
+  instance = aws_instance.devops_web_instance.id  # Asocia la IP elástica a la instancia
 }
 
-# Obtener la Subnet predeterminada (corrección)
-data "aws_subnet" "default" {
-  vpc_id = data.aws_vpc.default.id
+# Recurso: Volumen EBS (si se requiere almacenamiento adicional)
+resource "aws_volume_attachment" "devops_web_volume" {
+  device_name = "/dev/sdh"
+  volume_id   = aws_ebs_volume.devops_web_volume.id  # Asocia el volumen a la instancia
+  instance_id = aws_instance.devops_web_instance.id
 }
 
-# Instancia EC2
-resource "aws_instance" "web" {
-  ami                         = "ami-0c02fb55956c7d316" # Amazon Linux 2 (us-east-1)
-  instance_type               = "t2.micro"
-  key_name                    = var.key_name
-  vpc_security_group_ids      = [aws_security_group.web_sg.id]
-  subnet_id                   = data.aws_subnet.default.id
-  associate_public_ip_address = true
+# Recurso: Volumen EBS (creación de volumen adicional)
+resource "aws_ebs_volume" "devops_web_volume" {
+  availability_zone = aws_instance.devops_web_instance.availability_zone  # Zona de disponibilidad
+  size              = 8  # Tamaño del volumen en GB
+  type              = "gp2"  # Tipo de volumen
+}
 
-  tags = {
-    Name = "Alan DevOps Web"
-  }
+# Outputs
+output "instance_public_ip" {
+  value = aws_instance.devops_web_instance.public_ip
+}
 
-  user_data = <<-EOF
-              #!/bin/bash
-              yum update -y
-              yum install -y httpd php
-              systemctl enable httpd
-              systemctl start httpd
-              echo "<?php phpinfo(); ?>" > /var/www/html/index.php
-              EOF
+output "instance_id" {
+  value = aws_instance.devops_web_instance.id
+}
+
+output "eip_public_ip" {
+  value = aws_eip.devops_web_eip.public_ip
 }
