@@ -12,9 +12,20 @@ terraform {
   }
 }
 
+# Obtener la VPC predeterminada
+data "aws_vpc" "default" {
+  default = true
+}
+
+# Obtener la Subnet predeterminada
+data "aws_subnet" "default" {
+  vpc_id = data.aws_vpc.default.id
+}
+
 # Bucket S3
 resource "aws_s3_bucket" "project_bucket" {
   bucket = "alan-devops-project-terraform-bucket-001"
+
   tags = {
     Name        = "Proyecto DevOps Alan"
     Environment = "Dev"
@@ -60,17 +71,7 @@ resource "aws_security_group" "web_sg" {
   }
 }
 
-# Obtener la VPC predeterminada
-data "aws_vpc" "default" {
-  default = true
-}
-
-# Obtener la Subnet predeterminada (corrección)
-data "aws_subnet" "default" {
-  vpc_id = data.aws_vpc.default.id
-}
-
-# Instancia EC2
+# Instancia EC2 para desplegar la página
 resource "aws_instance" "web" {
   ami                         = "ami-0c02fb55956c7d316" # Amazon Linux 2 (us-east-1)
   instance_type               = "t2.micro"
@@ -86,9 +87,13 @@ resource "aws_instance" "web" {
   user_data = <<-EOF
               #!/bin/bash
               yum update -y
-              yum install -y httpd php
+              yum install -y httpd git
               systemctl enable httpd
               systemctl start httpd
-              echo "<?php phpinfo(); ?>" > /var/www/html/index.php
+              cd /var/www/html
+              rm -rf *
+              git clone https://github.com/AlanGaelQC/DevOpsAVCPRY_jahir-Alan.git temp
+              cp -r temp/* .
+              rm -rf temp
               EOF
 }

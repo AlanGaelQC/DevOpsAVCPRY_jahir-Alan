@@ -1,10 +1,10 @@
 variable "region" {
-  description = "Región de AWS"
+  description = "La región de AWS"
   type        = string
 }
 
 variable "ami_id" {
-  description = "ID de la AMI a usar"
+  description = "AMI ID para la instancia EC2"
   type        = string
 }
 
@@ -14,17 +14,17 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  description = "Nombre del par de llaves EC2"
+  description = "Nombre de la clave SSH"
   type        = string
 }
 
 variable "db_username" {
-  description = "Nombre de usuario para la base de datos"
+  description = "Nombre de usuario de la base de datos"
   type        = string
 }
 
 variable "db_password" {
-  description = "Contraseña para la base de datos"
+  description = "Contraseña de la base de datos"
   type        = string
   sensitive   = true
 }
