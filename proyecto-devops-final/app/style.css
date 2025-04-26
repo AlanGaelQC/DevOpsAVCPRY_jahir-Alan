@@ -1,3 +1,4 @@
+/* RESET Y BASE */
 * {
     margin: 0;
     padding: 0;
@@ -12,6 +13,9 @@ body {
     overflow-x: hidden;
 }
 
+/* ============================================== */
+/*                    NAVBAR                     */
+/* ============================================== */
 .navbar {
     background: rgba(0, 0, 0, 0.9);
     padding: 15px 40px;
@@ -47,9 +51,12 @@ body {
     color: #ff4d00;
 }
 
+/* ============================================== */
+/*                    HERO SECTION                */
+/* ============================================== */
 .hero {
     height: 100vh;
-    background: url('imagenes/RaceHeroBanner.jpg') center/cover no-repeat;
+    background: url('imagenes/0igecwdvgcf81.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -73,7 +80,7 @@ body {
     z-index: 2;
     color: white;
     animation: fadeInDown 1.5s ease;
-    background-color: rgba(0, 0, 0, 0.4); /* agregado para mejorar el contraste */
+    background-color: rgba(0, 0, 0, 0.4); 
     padding: 20px;
     border-radius: 10px;
 }
@@ -91,6 +98,9 @@ body {
     text-shadow: 0 0 5px black;
 }
 
+/* ============================================== */
+/*                   MUSIC BUTTON                 */
+/* ============================================== */
 #music-btn {
     padding: 10px 25px;
     background-color: #ff4d00;
@@ -106,12 +116,26 @@ body {
     background-color: #e63e00;
 }
 
-.races {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    padding: 60px 40px;
+/* ============================================== */
+/*                    RACE CARDS                  */
+/* ============================================== */
+.races-container {
     background: #1c1c1c;
+    padding: 60px 40px;
+}
+
+.top-races {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.bottom-races {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
 .race {
@@ -120,6 +144,8 @@ body {
     overflow: hidden;
     transition: transform 0.4s, box-shadow 0.4s;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 280px;
 }
 
 .race img {
@@ -142,6 +168,32 @@ body {
     box-shadow: 0 0 20px #ff4d00;
 }
 
+/* Responsive para las carreras */
+@media (max-width: 1200px) {
+    .top-races {
+        grid-template-columns: repeat(2, 1fr);
+        justify-items: center;
+    }
+    
+    .bottom-races {
+        justify-content: space-around;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-races {
+        grid-template-columns: 1fr;
+    }
+    
+    .bottom-races {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* ============================================== */
+/*                   CONTACT SECTION              */
+/* ============================================== */
 .contact {
     background-color: #111;
     padding: 50px 40px;
@@ -183,6 +235,9 @@ body {
     background-color: #e63e00;
 }
 
+/* ============================================== */
+/*                    FOOTER                     */
+/* ============================================== */
 footer {
     text-align: center;
     padding: 20px;
@@ -192,6 +247,9 @@ footer {
     color: #aaa;
 }
 
+/* ============================================== */
+/*                    MODAL                      */
+/* ============================================== */
 .modal {
     display: none;
     position: fixed;
@@ -227,6 +285,9 @@ footer {
     color: #fff;
 }
 
+/* ============================================== */
+/*                    ANIMACIONES                 */
+/* ============================================== */
 @keyframes fadeInDown {
     from {
         opacity: 0;
@@ -239,6 +300,44 @@ footer {
 }
 
 @keyframes fadeIn {
-    from {opacity: 0}
-    to {opacity: 1}
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* ============================================== */
+/*                   EVENTOS SECCIÓN              */
+/* ============================================== */
+#contenedor-eventos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 3rem;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.evento {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 2px solid #ff4d00;
+    border-radius: 10px;
+    color: white;
+    padding: 1rem;
+    width: 300px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 15px rgba(255, 77, 0, 0.5);
+}
+
+.evento:hover {
+    transform: scale(1.05);
+}
+
+.evento h3 {
+    margin-top: 0.5rem;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.evento p {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
 }

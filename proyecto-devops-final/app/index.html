@@ -6,6 +6,356 @@
     <title>Born to Race</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* RESET Y BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #111;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 2px solid #ff4d00;
+        }
+
+        .logo {
+            font-size: 24px;
+            color: #ff4d00;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links li a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: #ff4d00;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            height: 100vh;
+            background: url('imagenes/0igecwdvgcf81.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            text-align: center;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+            animation: fadeInDown 1.5s ease;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 60px;
+            margin-bottom: 15px;
+            color: #ff4d00;
+            text-shadow: 0 0 10px black;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 25px;
+            text-shadow: 0 0 5px black;
+        }
+
+        /* MUSIC BUTTON */
+        #music-btn {
+            padding: 10px 25px;
+            background-color: #ff4d00;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background 0.3s ease;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #music-btn:hover {
+            background-color: #e63e00;
+        }
+
+        /* RACES SECTION */
+        .races-container {
+            background: #1c1c1c;
+            padding: 60px 40px;
+        }
+
+        .top-races {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .bottom-races {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .race {
+            background-color: #222;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.4s, box-shadow 0.4s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .race img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .race h2 {
+            padding: 15px;
+            color: #ff4d00;
+            font-size: 1.3rem;
+        }
+
+        .race p {
+            padding: 0 15px 20px;
+            font-size: 0.9rem;
+        }
+
+        .race:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #ff4d00;
+        }
+
+        /* CONTACT SECTION */
+        .contact {
+            background-color: #111;
+            padding: 50px 40px;
+            text-align: center;
+        }
+
+        .contact h2 {
+            margin-bottom: 25px;
+            color: #ff4d00;
+        }
+
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .contact input, .contact textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .contact button {
+            padding: 10px 30px;
+            background-color: #ff4d00;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background 0.3s;
+        }
+
+        .contact button:hover {
+            background-color: #e63e00;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #000;
+            border-top: 2px solid #ff4d00;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            background-color: #1c1c1c;
+            margin: auto;
+            padding: 30px;
+            border: 2px solid #ff4d00;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 12px;
+            animation: fadeIn 0.5s ease-in-out;
+            position: relative;
+        }
+
+        .closeBtn {
+            color: #ff4d00;
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+
+        .closeBtn:hover {
+            color: #fff;
+        }
+
+        .modal-content h2 {
+            margin-bottom: 20px;
+            color: #ff4d00;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-content input {
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .modal-content button {
+            padding: 10px;
+            background-color: #ff4d00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            transition: background 0.3s;
+        }
+
+        .modal-content button:hover {
+            background-color: #e63e00;
+        }
+
+        /* ANIMACIONES */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1200px) {
+            .top-races {
+                grid-template-columns: repeat(2, 1fr);
+                justify-items: center;
+            }
+            
+            .hero h1 {
+                font-size: 48px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .top-races {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
 
@@ -21,35 +371,57 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section id="hero" class="hero" style="background-image: url('imagenes/0igecwdvgcf81.jpg'); background-size: cover; background-position: center;">
+    <section id="hero" class="hero">
         <div class="hero-content">
             <h1>Born to Race</h1>
-            <p>Speed isn’t everything. It’s the only thing.</p>
+            <p>Speed isn't everything. It's the only thing.</p>
             <button id="music-btn">🎵 Play Music</button>
         </div>
     </section>
 
     <!-- RACES SECTION -->
-    <section id="races" class="races">
-        <div class="race">
-            <img src="imagenes/fastandfurios.jpg" alt="Fast and Furious">
-            <h2>Fast & Furious</h2>
-            <p>Street racing legends collide in the urban jungle.</p>
+    <section id="races" class="races-container">
+        <!-- Primer grupo de 4 carreras -->
+        <div class="top-races">
+            <div class="race">
+                <img src="imagenes/fastandfurios.jpg" alt="Fast and Furious">
+                <h2>Fast & Furious</h2>
+                <p>Street racing legends collide in the urban jungle.</p>
+            </div>
+            <div class="race">
+                <img src="imagenes/OIP (1).jpeg" alt="Tokyo Drift Challenge">
+                <h2>Tokyo Drift Challenge</h2>
+                <p>Drift through neon-lit streets with ultimate precision.</p>
+            </div>
+            <div class="race">
+                <img src="imagenes/ProStreet.png" alt="ProStreet Legacy">
+                <h2>ProStreet Legacy</h2>
+                <p>From track to fame, dominate the circuit.</p>
+            </div>
+            <div class="race">
+                <img src="imagenes/wp4306463.webp" alt="Drag Rivals">
+                <h2>Drag Rivals</h2>
+                <p>Pure acceleration — prove who's king of the quarter mile.</p>
+            </div>
         </div>
-        <div class="race">
-            <img src="imagenes/OIP (1).jpeg" alt="Tokyo Drift Challenge">
-            <h2>Tokyo Drift Challenge</h2>
-            <p>Drift through neon-lit streets with ultimate precision.</p>
-        </div>
-        <div class="race">
-            <img src="imagenes/ProStreet.png" alt="ProStreet Legacy">
-            <h2>ProStreet Legacy</h2>
-            <p>From track to fame, dominate the circuit.</p>
-        </div>
-        <div class="race">
-            <img src="imagenes/wp4306463.webp" alt="Drag Rivals">
-            <h2>Drag Rivals</h2>
-            <p>Pure acceleration — prove who's king of the quarter mile.</p>
+        
+        <!-- Segundo grupo de 3 carreras (centradas) -->
+        <div class="bottom-races">
+            <div class="race">
+                <img src="imagenes/carrerarecreativa.webp" alt="Carrera 5K Primavera">
+                <h2>Carrera 5K Primavera</h2>
+                <p>Prepárate para un desafío de velocidad y resistencia en el corazón de la primavera.</p>
+            </div>
+            <div class="race">
+                <img src="imagenes/monterrey.jpg" alt="Maratón Monterrey">
+                <h2>Maratón Monterrey</h2>
+                <p>La ciudad de Monterrey te espera para este épico maratón de larga distancia.</p>
+            </div>
+            <div class="race">
+                <img src="imagenes/pruebas.jpg" alt="Evento de Pruebas">
+                <h2>Evento de Pruebas</h2>
+                <p>Una carrera especial para poner a prueba tus habilidades y destreza en el asfalto.</p>
+            </div>
         </div>
     </section>
 
@@ -86,6 +458,74 @@
     <!-- MUSIC AUDIO -->
     <audio id="bg-music" src="audio/ProMusic.mp3" loop></audio>
 
-    <script src="script.js"></script>
+    <!-- JAVASCRIPT -->
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('registerModal');
+        const openBtn = document.getElementById('openModalBtn');
+        const closeBtn = document.querySelector('.closeBtn');
+
+        openBtn.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Music functionality
+        document.getElementById('music-btn').addEventListener('click', () => {
+            const audio = document.getElementById('bg-music');
+            if (audio.paused) {
+                audio.play();
+                document.getElementById('music-btn').textContent = '🎵 Pause Music';
+            } else {
+                audio.pause();
+                document.getElementById('music-btn').textContent = '🎵 Play Music';
+            }
+        });
+
+        // Dynamic event loading (optional)
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('http://52.5.101.7:3000/eventos')
+                .then(response => response.json())
+                .then(events => {
+                    const bottomRaces = document.querySelector('.bottom-races');
+                    
+                    // Clear existing events if needed
+                    bottomRaces.innerHTML = '';
+                    
+                    events.forEach(event => {
+                        const raceDiv = document.createElement('div');
+                        raceDiv.classList.add('race');
+                        
+                        const raceImage = document.createElement('img');
+                        raceImage.src = event.imagen_url;
+                        raceImage.alt = event.nombre;
+
+                        const raceTitle = document.createElement('h2');
+                        raceTitle.textContent = event.nombre;
+
+                        const raceDescription = document.createElement('p');
+                        raceDescription.textContent = event.descripcion;
+
+                        raceDiv.appendChild(raceImage);
+                        raceDiv.appendChild(raceTitle);
+                        raceDiv.appendChild(raceDescription);
+
+                        bottomRaces.appendChild(raceDiv);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading events:', error);
+                });
+        });
+    </script>
 </body>
 </html>
